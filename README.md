@@ -1,6 +1,141 @@
 
 ![](./img/home_logo.png)
 
+
+### 1、Github Package 依赖方式
+
+**由于 Jitpack 经常存在历史包随机丢失问题，所以新增 Github Package 依赖方式，使用方式如下**：
+
+> 不过 github package 访问需要 token 去 access 比较麻烦，但是胜在稳定
+
+
+```
+allprojects {
+    repositories {
+		...
+        maven {
+            url 'https://maven.pkg.github.com/matu666/GSYVideoPlayer-8.1.9-release-jitpack'
+
+            // You can also use your own GitHub account and token
+            // For convenience, I have provided a token for an infrequently used account here
+            credentials {
+                // your github name
+                username = 'carsmallguo'
+                // your github generate new token
+                password = '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'
+            }
+        }
+        maven {
+            url "https://maven.aliyun.com/repository/public"
+        }
+    }
+}
+```
+- 生成自己 token 的方式可见：https://docs.github.com/zh/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
+
+> 理论上就是右上角头像 - Settings - Developer Settings - Personal access tokens -  tokens (classic) -  Generate new token（classic）- read:packages
+> 记得过期时间选择永久
+
+**你可以选择下面三种的其中一种，在module下的build.gradle添加。**
+
+#### A、直接引入
+```
+ //完整版引入
+ implementation 'com.shuyu:gsyvideoplayer:8.1.9'
+```
+
+#### B、添加java和你想要的so支持：
+
+```
+ implementation 'com.shuyu:gsyvideoplayer-java:8.1.9'
+
+ //是否需要ExoPlayer模式
+ implementation 'com.shuyu:gsyvideoplayer-exo2:8.1.9'
+
+ //根据你的需求ijk模式的so
+ implementation 'com.shuyu:gsyvideoplayer-armv5:8.1.9'
+ implementation 'com.shuyu:gsyvideoplayer-armv7a:8.1.9'
+ implementation 'com.shuyu:gsyvideoplayer-arm64:8.1.9'
+ implementation 'com.shuyu:gsyvideoplayer-x86:8.1.9'
+ implementation 'com.shuyu:gsyvideoplayer-x64:8.1.9'
+```
+
+#### C、支持其他格式协议的（mpeg，rtsp, concat、crypto协议，支持 16k Page Size）
+
+A、B普通版本支持263/264/265等，对于mpeg编码会有声音无画面情况。
+C 引入的so支持mpeg编码和其他补充协议，但是so包相对变大。
+
+```
+ implementation 'com.shuyu:gsyvideoplayer-java:8.1.9'
+
+ //是否需要ExoPlayer模式
+ implementation 'com.shuyu:gsyvideoplayer-exo2:8.1.9'
+
+ //更多ijk的编码支持
+ implementation 'com.shuyu:gsyvideoplayer-ex_so:8.1.9'
+```
+
+
+### 2、Jitpack 引入方法（JCenter 即将关闭）
+
+
+#### First、在project下的build.gradle添加
+
+```
+allprojects {
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
+        maven { url "https://maven.aliyun.com/repository/public" }
+	}
+}
+```
+
+**你可以选择下面三种的其中一种，在module下的build.gradle添加。**
+
+#### A、直接引入
+```
+ //完整版引入
+ implementation 'com.github.matu666.GSYVideoPlayer-8.1.9-release-jitpack:gsyvideoplayer:v8.1.9'
+```
+
+#### B、添加java和你想要的so支持：
+
+```
+ implementation 'com.github.matu666.GSYVideoPlayer-8.1.9-release-jitpack:gsyvideoplayer-java:v8.1.9'
+
+ //是否需要ExoPlayer模式
+ implementation 'com.github.matu666.GSYVideoPlayer-8.1.9-release-jitpack:gsyvideoplayer-exo2:v8.1.9'
+
+ //根据你的需求ijk模式的so
+ implementation 'com.github.matu666.GSYVideoPlayer-8.1.9-release-jitpack:gsyvideoplayer-arm64:v8.1.9'
+ implementation 'com.github.matu666.GSYVideoPlayer-8.1.9-release-jitpack:gsyvideoplayer-armv7a:v8.1.9'
+ implementation 'com.github.matu666.GSYVideoPlayer-8.1.9-release-jitpack:gsyvideoplayer-armv5:v8.1.9'
+ implementation 'com.github.matu666.GSYVideoPlayer-8.1.9-release-jitpack:gsyvideoplayer-x86:v8.1.9'
+ implementation 'com.github.matu666.GSYVideoPlayer-8.1.9-release-jitpack:gsyvideoplayer-x64:v8.1.9'
+```
+
+#### C、支持其他格式协议的（mpeg，rtsp, concat、crypto协议）
+
+A、B普通版本支持263/264/265等，对于mpeg编码会有声音无画面情况。
+C 引入的so支持mpeg编码和其他补充协议，但是so包相对变大。
+
+```
+ implementation 'com.github.matu666.GSYVideoPlayer-8.1.9-release-jitpack:gsyvideoplayer-java:v8.1.9'
+
+ //是否需要ExoPlayer模式
+ implementation 'com.github.matu666.GSYVideoPlayer-8.1.9-release-jitpack:gsyvideoplayer-exo2:v8.1.9'
+
+ //更多ijk的编码支持
+ implementation 'com.github.matu666.GSYVideoPlayer-8.1.9-release-jitpack:gsyvideoplayer-ex_so:v8.1.9'
+
+```
+
+
+----------------------------------------------------------
+
+
+
 ## 基于[IJKPlayer](https://github.com/Bilibili/ijkplayer)（兼容系统MediaPlayer与EXOPlayer2），实现了多功能的视频播放器。 (请仔细阅读下方各项说明，大多数问题可在下方找到解答)。
 
 > ## [如果克隆太慢或者图片看不到，可尝试从码云地址下载](https://gitee.com/CarGuo/GSYVideoPlayer)
@@ -68,23 +203,23 @@ allprojects {
 #### A、直接引入
 ```
  //完整版引入
- implementation 'com.github.CarGuo.GSYVideoPlayer:GSYVideoPlayer:v8.1.8-release-jitpack'
+ implementation 'com.github.matu666.GSYVideoPlayer-8.1.9-release-jitpack:gsyvideoplayer:v8.1.9'
 ```
 
 #### B、添加java和你想要的so支持：
 
 ```
- implementation 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-java:v8.1.8-release-jitpack'
+ implementation 'com.github.matu666.GSYVideoPlayer-8.1.9-release-jitpack:gsyvideoplayer-java:v8.1.9'
 
  //是否需要ExoPlayer模式
- implementation 'com.github.CarGuo.GSYVideoPlayer:GSYVideoPlayer-exo2:v8.1.8-release-jitpack'
+ implementation 'com.github.matu666.GSYVideoPlayer-8.1.9-release-jitpack:gsyvideoplayer-exo2:v8.1.9'
 
  //根据你的需求ijk模式的so
- implementation 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-arm64:v8.1.8-release-jitpack'
- implementation 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-armv7a:v8.1.8-release-jitpack'
- implementation 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-armv5:v8.1.8-release-jitpack'
- implementation 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-x86:v8.1.8-release-jitpack'
- implementation 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-x64:v8.1.8-release-jitpack'
+ implementation 'com.github.matu666.GSYVideoPlayer-8.1.9-release-jitpack:gsyvideoplayer-arm64:v8.1.9'
+ implementation 'com.github.matu666.GSYVideoPlayer-8.1.9-release-jitpack:gsyvideoplayer-armv7a:v8.1.9'
+ implementation 'com.github.matu666.GSYVideoPlayer-8.1.9-release-jitpack:gsyvideoplayer-armv5:v8.1.9'
+ implementation 'com.github.matu666.GSYVideoPlayer-8.1.9-release-jitpack:gsyvideoplayer-x86:v8.1.9'
+ implementation 'com.github.matu666.GSYVideoPlayer-8.1.9-release-jitpack:gsyvideoplayer-x64:v8.1.9'
 ```
 
 #### C、支持其他格式协议的（mpeg，rtsp, concat、crypto协议）
@@ -93,16 +228,89 @@ A、B普通版本支持263/264/265等，对于mpeg编码会有声音无画面情
 C 引入的so支持mpeg编码和其他补充协议，但是so包相对变大。
 
 ```
- implementation 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-java:v8.1.8-release-jitpack'
+ implementation 'com.github.matu666.GSYVideoPlayer-8.1.9-release-jitpack:gsyvideoplayer-java:v8.1.9'
 
  //是否需要ExoPlayer模式
- implementation 'com.github.CarGuo.GSYVideoPlayer:GSYVideoPlayer-exo2:v8.1.8-release-jitpack'
+ implementation 'com.github.matu666.GSYVideoPlayer-8.1.9-release-jitpack:gsyvideoplayer-exo2:v8.1.9'
 
  //更多ijk的编码支持
- implementation 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-ex_so:v8.1.8-release-jitpack'
+ implementation 'com.github.matu666.GSYVideoPlayer-8.1.9-release-jitpack:gsyvideoplayer-ex_so:v8.1.9'
 
 ```
 
+### 2、Github Package 依赖方式
+
+**由于 Jitpack 经常存在历史包随机丢失问题，所以新增 Github Package 依赖方式，使用方式如下**：
+
+> 不过 github package 访问需要 token 去 access 比较麻烦，但是胜在稳定
+
+
+```
+allprojects {
+    repositories {
+		...
+        maven {
+            url 'https://maven.pkg.github.com/matu666/GSYVideoPlayer-8.1.9-release-jitpack'
+
+            // You can also use your own GitHub account and token
+            // For convenience, I have provided a token for an infrequently used account here
+            credentials {
+                // your github name
+                username = 'carsmallguo'
+                // your github generate new token
+                password = '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'
+            }
+        }
+        maven {
+            url "https://maven.aliyun.com/repository/public"
+        }
+    }
+}
+```
+- 生成自己 token 的方式可见：https://docs.github.com/zh/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
+
+> 理论上就是右上角头像 - Settings - Developer Settings - Personal access tokens -  tokens (classic) -  Generate new token（classic）- read:packages
+> 记得过期时间选择永久
+
+**你可以选择下面三种的其中一种，在module下的build.gradle添加。**
+
+#### A、直接引入
+```
+ //完整版引入
+ implementation 'com.shuyu:gsyvideoplayer:8.1.9'
+```
+
+#### B、添加java和你想要的so支持：
+
+```
+ implementation 'com.shuyu:gsyvideoplayer-java:8.1.9'
+
+ //是否需要ExoPlayer模式
+ implementation 'com.shuyu:gsyvideoplayer-exo2:8.1.9'
+
+ //根据你的需求ijk模式的so
+ implementation 'com.shuyu:gsyvideoplayer-armv5:8.1.9'
+ implementation 'com.shuyu:gsyvideoplayer-armv7a:8.1.9'
+ implementation 'com.shuyu:gsyvideoplayer-arm64:8.1.9'
+ implementation 'com.shuyu:gsyvideoplayer-x86:8.1.9'
+ implementation 'com.shuyu:gsyvideoplayer-x64:8.1.9'
+```
+
+#### C、支持其他格式协议的（mpeg，rtsp, concat、crypto协议，支持 16k Page Size）
+
+A、B普通版本支持263/264/265等，对于mpeg编码会有声音无画面情况。
+C 引入的so支持mpeg编码和其他补充协议，但是so包相对变大。
+
+```
+ implementation 'com.shuyu:gsyvideoplayer-java:8.1.9'
+
+ //是否需要ExoPlayer模式
+ implementation 'com.shuyu:gsyvideoplayer-exo2:8.1.9'
+
+ //更多ijk的编码支持
+ implementation 'com.shuyu:gsyvideoplayer-ex_so:8.1.9'
+```
+----------------------------------------------------------
 #### 代码中的全局切换支持（更多请参看下方文档和demo）
 
 ```
